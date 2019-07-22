@@ -8,7 +8,7 @@ class OAuthLogger
 
     private static function initializeLogger()
     {
-        if (!$self::oauthLogger) {
+        if (!self::$oauthLogger) {
             $loggerClassName = ZohoOAuth::getConfigValue(ZohoOAuthConstants::OAUTH_LOGGER_CLASS);
             self::$oauthLogger = new $loggerClassName();
         }
