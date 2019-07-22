@@ -1,6 +1,8 @@
 <?php
 namespace zcrmsdk\oauth\utility;
 
+use zcrmsdk\oauth\ZohoOAuth;
+
 class OAuthLogger
 {
     /** @var \zcrmsdk\oauth\utility\ZohoOAuthLoggerInterface */
