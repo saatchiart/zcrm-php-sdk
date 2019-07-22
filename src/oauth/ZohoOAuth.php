@@ -5,6 +5,7 @@ use Exception;
 use zcrmsdk\oauth\exception\ZohoOAuthException;
 use zcrmsdk\oauth\persistence\ZohoOAuthPersistenceByFile;
 use zcrmsdk\oauth\persistence\ZohoOAuthPersistenceHandler;
+use zcrmsdk\oauth\persistence\ZohoOAuthPersistenceInterface;
 use zcrmsdk\oauth\utility\ZohoOAuthConstants;
 use zcrmsdk\oauth\utility\ZohoOAuthLogger;
 use zcrmsdk\oauth\utility\ZohoOAuthParams;
@@ -56,7 +57,7 @@ class ZohoOAuth
             self::$configProperties[ZohoOAuthConstants::ACCESS_TYPE] = "offline";
         }
         if (! array_key_exists(ZohoOAuthConstants::PERSISTENCE_HANDLER_CLASS, $configuration) || $configuration[ZohoOAuthConstants::PERSISTENCE_HANDLER_CLASS] == "") {
-            self::$configProperties[ZohoOAuthConstants::PERSISTENCE_HANDLER_CLASS] = "ZohoOAuthPersistenceHandler";
+            self::$configProperties[ZohoOAuthConstants::PERSISTENCE_HANDLER_CLASS] = ZohoOAuthPersistenceHandler::class;
         }
         if (! array_key_exists(ZohoOAuthConstants::IAM_URL, $configuration) || $configuration[ZohoOAuthConstants::IAM_URL] == "") {
             self::$configProperties[ZohoOAuthConstants::IAM_URL] = "https://accounts.zoho.com";
@@ -137,8 +138,9 @@ class ZohoOAuth
             if(ZohoOAuth::getConfigValue("token_persistence_path")!=""){
                 return new ZohoOAuthPersistenceByFile() ;
             }
-            else if(self::$configProperties[ZohoOAuthConstants::PERSISTENCE_HANDLER_CLASS] == "ZohoOAuthPersistenceHandler"){
-                return new ZohoOAuthPersistenceHandler();
+            else if(class_exists(self::$configProperties[ZohoOAuthConstants::PERSISTENCE_HANDLER_CLASS])){
+                $className = self::$configProperties[ZohoOAuthConstants::PERSISTENCE_HANDLER_CLASS];
+                return new $className();
             }
             else{
                 require_once  realpath(self::$configProperties[ZohoOAuthConstants::PERSISTENCE_HANDLER_CLASS]);
