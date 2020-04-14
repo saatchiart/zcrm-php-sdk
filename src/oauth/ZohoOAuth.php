@@ -1,13 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 namespace zcrmsdk\oauth;
 
 use Exception;
 use zcrmsdk\oauth\exception\ZohoOAuthException;
 use zcrmsdk\oauth\persistence\ZohoOAuthPersistenceByFile;
 use zcrmsdk\oauth\persistence\ZohoOAuthPersistenceHandler;
-use zcrmsdk\oauth\persistence\ZohoOAuthPersistenceInterface;
 use zcrmsdk\oauth\utility\ZohoOAuthConstants;
 use zcrmsdk\oauth\utility\ZohoOAuthLogger;
+use zcrmsdk\oauth\utility\ZohoOAuthLoggerInterface;
 use zcrmsdk\oauth\utility\ZohoOAuthParams;
 
 class ZohoOAuth
@@ -50,7 +53,7 @@ class ZohoOAuth
             ZohoOAuthConstants::DATABASE_PORT,
             ZohoOAuthConstants::DATABASE_PASSWORD,
             ZohoOAuthConstants::DATABASE_USERNAME,
-            ZohoOauthConstants::OAUTH_LOGGER_CLASS,
+            ZohoOAuthLoggerInterface::OAUTH_LOGGER_CLASS,
         );
 
         if (! array_key_exists(ZohoOAuthConstants::ACCESS_TYPE, $configuration) || $configuration[ZohoOAuthConstants::ACCESS_TYPE] == "") {
@@ -62,8 +65,8 @@ class ZohoOAuth
         if (! array_key_exists(ZohoOAuthConstants::IAM_URL, $configuration) || $configuration[ZohoOAuthConstants::IAM_URL] == "") {
             self::$configProperties[ZohoOAuthConstants::IAM_URL] = "https://accounts.zoho.com";
         }
-        if (! array_key_exists(ZohoOAuthConstants::OAUTH_LOGGER_CLASS, $configuration) || $configuration[ZohoOAuthConstants::OAUTH_LOGGER_CLASS] == "") {
-            self::$configProperties[ZohoOAuthConstants::OAUTH_LOGGER_CLASS] = ZohoOAuthLogger::class;
+        if (! array_key_exists(ZohoOAuthLoggerInterface::OAUTH_LOGGER_CLASS, $configuration) || $configuration[ZohoOAuthLoggerInterface::OAUTH_LOGGER_CLASS] == "") {
+            self::$configProperties[ZohoOAuthLoggerInterface::OAUTH_LOGGER_CLASS] = ZohoOAuthLogger::class;
         }
 
         foreach ($config_keys as $key) {
