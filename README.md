@@ -86,6 +86,7 @@ db_port
 db_username
 db_password
 oauth_logger_class
+logger_class
 
 
 client_id, client_secret and redirect_uri are your OAuth client’s configurations that you get after registering your Zoho client.
@@ -115,6 +116,7 @@ applicationLogFilePath - The SDK stores the log information in a file.
 persistence_handler_class is the implementation of the ZohoOAuthPersistenceInterface.
 
 oauth_logger_class is an optional implementation of `zcrm\oauth\utility\ZohoOauthLoggerInterface` to log oauth changes.
+logger_class is an optional implementation of `zcrmsdk\crm\utility\ZohoLoggerInterface` to log exceptions. Exceptions are rethrown so you can always stub this to log nothing and catch them further up.
 
 >If the Optional keys are not specified, their default values will be assigned automatically.
 >The 'apiBaseUrl' and 'accounts_url' are mandatory in case the user is not in the "com" domain.
