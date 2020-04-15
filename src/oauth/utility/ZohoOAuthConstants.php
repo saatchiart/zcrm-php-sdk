@@ -77,6 +77,4 @@ class ZohoOAuthConstants
     const DATABASE_PASSWORD = "db_password";
 
     const RESPONSECODE_OK = 200;
-
-    const OAUTH_LOGGER_CLASS = "oauth_logger_class";
 }
